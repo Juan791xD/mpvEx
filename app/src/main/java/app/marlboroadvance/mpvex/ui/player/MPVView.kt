@@ -105,6 +105,11 @@ class MPVView(
     }
 
     // Set hwdec with fallback order: HW+ (mediacodec) -> HW (mediacodec-copy) -> SW (no)
+    MPVLib.setOptionString("cache", "yes")
+    MPVLib.setOptionString("demuxer-max-bytes", "300MiB")
+    MPVLib.setOptionString("demuxer-max-back-bytes", "100MiB")
+    MPVLib.setOptionString("demuxer-readahead-secs", "300")
+    MPVLib.setOptionString("cache-secs", "300")
     MPVLib.setOptionString(
       "hwdec",
       if (decoderPreferences.tryHWDecoding.get()) "mediacodec,mediacodec-copy,no" else "no",
@@ -117,8 +122,8 @@ class MPVView(
     
     // Cap demuxer cache for mobile to prevent memory issues
     val cacheMegs = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O_MR1) 64 else 32
-    MPVLib.setOptionString("demuxer-max-bytes", "${cacheMegs * 1024 * 1024}")
-    MPVLib.setOptionString("demuxer-max-back-bytes", "${cacheMegs * 1024 * 1024}")
+    MPVLib.setOptionString("demuxer-max-bytes", "300MiB")
+    MPVLib.setOptionString("demuxer-max-back-bytes", "100MiB")
     
     val logLevel = if (advancedPreferences.verboseLogging.get()) "v" else "warn"
     MPVLib.setOptionString("msg-level", "all=$logLevel")
