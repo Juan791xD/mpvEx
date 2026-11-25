@@ -11,7 +11,12 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - run: chmod +x gradlew && ./gradlew assembleDebug
+      - name: Memoria para Gradle y Kotlin
+        run: |
+          mkdir -p ~/.gradle
+          echo "org.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=1g" >> ~/.gradle/gradle.properties
+          echo "kotlin.daemon.jvmargs=-Xmx3g" >> ~/.gradle/gradle.properties
+      - run: chmod +x gradlew && ./gradlew assembleStandardDebug
       - uses: actions/upload-artifact@v4
         with:
           name: mpvex-apk
