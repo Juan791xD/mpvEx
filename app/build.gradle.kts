@@ -93,7 +93,7 @@ android {
     }
 
     named("debug") {
-      applicationIdSuffix = ".debug"
+      //applicationIdSuffix = ".debug"
       versionNameSuffix = "-${getCommitCount()}"
     }
   }
